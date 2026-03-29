@@ -28,34 +28,42 @@ def validar_carpeta (ruta):
 
 def guardar_datos(ruta, contenido):
     with open(ruta,'a',newline='',encoding='utf-8') as archivo:
-        archivo.write(f'{contenido}|\n')
+        archivo.write(f'{contenido}\n')
 
 carpeta = "Archivos"
 archivo = f'{carpeta}/estudiantes.txt'
 validar_carpeta(carpeta)
 
 def datos_estudiante():
-    print('Ingrese Datos:')
-    num_d = int(input('Datos a ingresar: '))
+    print('---------------------------------------------------')
 
-    num = 0
     contenido = ''
 
-    while num_d > 0:
-        num = input('Numero: ')
-        contenido = f'{contenido}|{num}'
-        num_d-=1
+    nombre_estudiante = input('Ingrese su nombre:')
+    edad_estudiante = input('Ingrese su edad: ')
+    carrera_estudiante = input('Ingrese el nombre de su carrera: ')
+    promedio_notas = input('Ingrese su promedio de notas: ')
+
+    contenido = f'{nombre_estudiante or 'Vacío'} | {edad_estudiante or 'Vacío'} | {carrera_estudiante or 'Vacío'} | {promedio_notas or 'Vacío'}'
+       # => Esta función de .count(), basicamente devuelve el numero de la cuenta de la palabra que le hayamos indicado.
+       #En este caso, yo queria permitir al menos un dato vacío, pero más de eso no.
+    if contenido.count('Vacío') >= 2:
+        print('************************************************')
+        print('\t\t¡IMPORTANTE!\n\tDebe ingresar los datos completos.')
+        print('************************************************')
         
-    guardar_datos(archivo,contenido)
+        datos_estudiante()
+        return
+    else: 
+        guardar_datos(archivo,contenido)
 
     print('¿Desea registrar un nuevo estudiante? (Elija 1-2)\n1. SI\n2.NO')
     opcion = int(input())
 
     if opcion == 1:
         datos_estudiante()
-
     else :
-        print('¡Datos registrados con éxito!')
+        print('¡El archivo "estudiantes.txt" se ha guardado con éxito!')
 
 datos_estudiante()
 
